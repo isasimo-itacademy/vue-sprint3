@@ -80,26 +80,31 @@ var total = 0;
 // Exercise 1
 function buy(id) {
     // 1. Loop for to the array products to get the item to add to cart
-    for (let index = 0; index < products.length; index++) {
-        if(products[index].id === id) {
-            let item = products[index];
-            //console.log(item);
-            return;
+    let quin;
+    for(let item in products) {
+        if(products[item].id === id) {
+            quin = products[item];
+            //console.log(quin);
         }
     }
     // 2. Add found product to the cartList array
-    products.push(item);
+    cartList.push(quin);
 }
 
 // Exercise 2
 function cleanCart() {
-
+    cartList = [];
 }
 
 // Exercise 3
 function calculateSubtotals() {
     // 1. Create a for loop on the "cartList" array 
     // 2. Implement inside the loop an if...else or switch...case to add the quantities of each type of product, obtaining the subtotals: subtotalGrocery, subtotalBeauty and subtotalClothes
+    
+    /* for (let index = 0; index < cartList.length; index++) {
+        const element = array[index];
+        
+    } */
 }
 
 // Exercise 4
