@@ -80,7 +80,15 @@ var total = 0;
 // Exercise 1
 function buy(id) {
     // 1. Loop for to the array products to get the item to add to cart
+    for (let index = 0; index < products.length; index++) {
+        if(products[index].id === id) {
+            let item = products[index];
+            //console.log(item);
+            return;
+        }
+    }
     // 2. Add found product to the cartList array
+    products.push(item);
 }
 
 // Exercise 2
