@@ -89,6 +89,7 @@ function buy(id) {
     }
     // 2. Add found product to the cartList array
     cartList.push(quin);
+    calculateSubtotals();
 }
 
 // Exercise 2
@@ -100,33 +101,44 @@ function cleanCart() {
 function calculateSubtotals() {
     // 1. Create a for loop on the "cartList" array 
     // 2. Implement inside the loop an if...else or switch...case to add the quantities of each type of product, obtaining the subtotals: subtotalGrocery, subtotalBeauty and subtotalClothes
+    subtotal.grocery.value = 0;
+    subtotal.beauty.value = 0;
+    subtotal.clothes.value = 0;
 
     for (let index = 0; index < cartList.length; index++) {
         switch (cartList[index].type) {
             case 'grocery':
-                subtotal.grocery.value = subtotal.grocery.value + cartList[index].price;
+                subtotal.grocery.value += cartList[index].price;
                 break;
             
             case 'beauty':
-                subtotal.beauty.value = subtotal.beauty.value + cartList[index].price;
+                subtotal.beauty.value += cartList[index].price;
                 break;
 
             case 'clothes':
-                subtotal.clothes.value = subtotal.clothes.value + cartList[index].price;
+                subtotal.clothes.value += cartList[index].price;
                 break;
 
             default:
                 break;
         }
     }
-    console.log('subtotalGrocery: ' + subtotal.grocery.value);
-    console.log('subtotalBeauty: ' + subtotal.beauty.value);
-    console.log('subtotalClothes: ' + subtotal.clothes.value); 
+    //console.log('subtotalGrocery: ' + subtotal.grocery.value);
+    //console.log('subtotalBeauty: ' + subtotal.beauty.value);
+    //console.log('subtotalClothes: ' + subtotal.clothes.value); 
+    calculateTotal();
 }
 
 // Exercise 4
 function calculateTotal() {
     // Calculate total price of the cart either using the "cartList" array
+    total = 0;    
+
+    for (let key in subtotal) {
+        //console.log(subtotal[key].value);
+        total += subtotal[key].value; 
+      }
+    //console.log('TOTAL: ' + total);
 }
 
 // Exercise 5
