@@ -147,18 +147,20 @@ function generateCart() {
     // Using the "cartlist" array that contains all the items in the shopping cart, 
     // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
     cart = [];
-    
-    for (let prop in cartList) {
 
+    for (let prop in cartList) {
         if (cart.some(e => e.name === cartList[prop].name)) {
-            let which = cart.find(element => element === cart[prop].name);
-            console.log('YESSS: ' + which);
-            
+            /* for (let item in cart) {
+                let quin = cart[item].indexOf('name');
+            } */
+            console.log('YESSS: ' + quin);
         } else {            
             cart.push({name: cartList[prop].name, price: cartList[prop].price, type: cartList[prop].type, quantity: 1, subtotal: cartList[prop].price});
         }
     }
+
     console.log(cart);
+
     /* {
         name: 'cooking oil',
         price: 10.5,
