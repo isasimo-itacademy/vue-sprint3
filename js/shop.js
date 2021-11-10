@@ -150,26 +150,14 @@ function generateCart() {
 
     for (let prop in cartList) {
         if (cart.some(e => e.name === cartList[prop].name)) {
-            /* for (let item in cart) {
-                let quin = cart[item].indexOf('name');
-            } */
-            console.log('YESSS: ' + quin);
-        } else {            
+            let index = cart.findIndex(quin => quin.name === cartList[prop].name);
+            cart[index].quantity += 1; 
+            cart[index].subtotal += cartList[prop].price;
+        } else {
             cart.push({name: cartList[prop].name, price: cartList[prop].price, type: cartList[prop].type, quantity: 1, subtotal: cartList[prop].price});
         }
     }
-
     console.log(cart);
-
-    /* {
-        name: 'cooking oil',
-        price: 10.5,
-        type: 'grocery',
-        quantity: 5,
-        subtotal: 31.5,
-        subtotalWithDiscount: 30
-      }, */
-
 }
 
 // Exercise 6
