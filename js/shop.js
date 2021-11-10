@@ -151,18 +151,31 @@ function generateCart() {
     for (let prop in cartList) {
         if (cart.some(e => e.name === cartList[prop].name)) {
             let index = cart.findIndex(quin => quin.name === cartList[prop].name);
-            cart[index].quantity += 1; 
+            cart[index].quantity += 1;
             cart[index].subtotal += cartList[prop].price;
         } else {
-            cart.push({name: cartList[prop].name, price: cartList[prop].price, type: cartList[prop].type, quantity: 1, subtotal: cartList[prop].price});
+            cart.push({name: cartList[prop].name, price: cartList[prop].price, type: cartList[prop].type, quantity: 1, subtotal: cartList[prop].price, subtotalWithDiscount: 0});
         }
     }
-    console.log(cart);
+    //console.log(cart);
+    applyPromotionsCart();
 }
 
 // Exercise 6
 function applyPromotionsCart() {
     // Apply promotions to each item in the array "cart"
+    for (let prop in cart) {
+        if ((cart[prop].name === 'cooking oil') && (cart[prop].quantity >= 3)) {
+            //console.log('OFERTA oli');
+            let ofertaOli = 10;
+            cart[prop].price = ofertaOli;
+            cart[prop].subtotalWithDiscount = ofertaOli * cart[prop].quantity;
+        } else if ((cart[prop].name === 'Instant cupcake mixture') && (cart[prop].quantity >= 10)) {
+            let ofertaMixSub = (cart[prop].subtotal / 3) * 2;
+            cart[prop].subtotalWithDiscount = ofertaMixSubTotal;
+        }
+    }
+    console.log(cart);
 }
 
 // Exercise 7
