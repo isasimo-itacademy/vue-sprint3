@@ -149,7 +149,9 @@ function calculateSubtotals() {
                 break;
         }
     }
-
+    console.log('subtotalGrocery: ' + subtotal.grocery.value);
+    console.log('subtotalBeauty: ' + subtotal.beauty.value);
+    console.log('subtotalClothes: ' + subtotal.clothes.value);
     calculateTotal();
 }
 
@@ -212,9 +214,11 @@ function addToCart(id) {
         if(products[item].id === id) {
             if (cart.some(e => e.name === products[item].name)) {
                 let index = cart.findIndex(quin => quin.name === products[item].name);
-                cart[index].quantity += 1;
+                let updatedQuantity = cart[index].quantity + 1;
+                cart[index].quantity = updatedQuantity;
+                cart[index].subtotal = cart[index].price * updatedQuantity;
             } else {
-                cart.push({name: products[item].name, price: products[item].price, type: products[item].type, quantity: 1, subtotal: 0, subtotalWithDiscount: 0});
+                cart.push({name: products[item].name, price: products[item].price, type: products[item].type, quantity: 1, subtotal: products[item].price, subtotalWithDiscount: 0});
             }
         }
     }
