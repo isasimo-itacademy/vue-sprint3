@@ -84,7 +84,6 @@ function buy(id) {
     for(let item in products) {
         if(products[item].id === id) {
             quin = products[item];
-            //console.log(quin);
         }
     }
     // 2. Add found product to the cartList array
@@ -101,6 +100,9 @@ function cleanCart() {
 function calculateSubtotals() {
     // 1. Create a for loop on the "cartList" array 
     // 2. Implement inside the loop an if...else or switch...case to add the quantities of each type of product, obtaining the subtotals: subtotalGrocery, subtotalBeauty and subtotalClothes
+    
+    /* 
+    // Before Refactor
     subtotal.grocery.value = 0;
     subtotal.beauty.value = 0;
     subtotal.clothes.value = 0;
@@ -123,9 +125,31 @@ function calculateSubtotals() {
                 break;
         }
     }
-    //console.log('subtotalGrocery: ' + subtotal.grocery.value);
-    //console.log('subtotalBeauty: ' + subtotal.beauty.value);
-    //console.log('subtotalClothes: ' + subtotal.clothes.value); 
+    console.log('subtotalGrocery: ' + subtotal.grocery.value);
+    console.log('subtotalBeauty: ' + subtotal.beauty.value);
+    console.log('subtotalClothes: ' + subtotal.clothes.value); 
+    */
+
+    // After Refactor
+    for (let index = 0; index < cart.length; index++) {
+        switch (cart[index].type) {
+            case 'grocery':
+                subtotal.grocery.value += cart[index].price;
+                break;
+            
+            case 'beauty':
+                subtotal.beauty.value += cart[index].price;
+                break;
+
+            case 'clothes':
+                subtotal.clothes.value += cart[index].price;
+                break;
+
+            default:
+                break;
+        }
+    }
+
     calculateTotal();
 }
 
@@ -139,7 +163,8 @@ function calculateTotal() {
         total += subtotal[key].value; 
     }
     //console.log('TOTAL: ' + total);
-    generateCart();
+    //generateCart();
+    applyPromotionsCart();
 }
 
 // Exercise 5
@@ -172,7 +197,7 @@ function applyPromotionsCart() {
             cart[prop].subtotalWithDiscount = ofertaOli * cart[prop].quantity;
         } else if ((cart[prop].name === 'Instant cupcake mixture') && (cart[prop].quantity >= 10)) {
             let ofertaMixSub = (cart[prop].subtotal / 3) * 2;
-            cart[prop].subtotalWithDiscount = ofertaMixSubTotal;
+            cart[prop].subtotalWithDiscount = ofertaMixSub;
         }
     }
     console.log(cart);
@@ -183,6 +208,18 @@ function addToCart(id) {
     // Refactor previous code in order to simplify it 
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cart array or update its quantity in case it has been added previously.
+    for(let item in products) {
+        if(products[item].id === id) {
+            if (cart.some(e => e.name === products[item].name)) {
+                let index = cart.findIndex(quin => quin.name === products[item].name);
+                cart[index].quantity += 1;
+            } else {
+                cart.push({name: products[item].name, price: products[item].price, type: products[item].type, quantity: 1, subtotal: 0, subtotalWithDiscount: 0});
+            }
+        }
+    }
+    //console.log(cart);
+    calculateSubtotals();
 }
 
 // Exercise 9
