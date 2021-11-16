@@ -194,7 +194,7 @@ function applyPromotionsCart() {
     // Apply promotions to each item in the array "cart"
     for (let prop in cart) {
         if ((cart[prop].name === 'cooking oil') && (cart[prop].quantity >= 3)) {
-            //console.log('OFERTA oli');
+            console.log('OFERTA oli');
             let ofertaOli = 10;
             cart[prop].price = ofertaOli;
             cart[prop].subtotalWithDiscount = ofertaOli * cart[prop].quantity;
@@ -205,7 +205,7 @@ function applyPromotionsCart() {
             cart[prop].subtotalWithDiscount = cart[prop].subtotal;
         }
     }
-    console.log(cart);
+    //console.log(cart);
 }
 
 // Exercise 7
@@ -232,10 +232,61 @@ function addToCart(id) {
 // Exercise 9
 function removeFromCart(id) {
     // 1. Loop for to the array products to get the item to add to cart
+    for(let item in products) {
+        if (products[item].id === id) {
+            if (cart.some(e => e.name === products[item].name)) {
+                let index = cart.findIndex(quin => quin.name === products[item].name);
+                if(cart[index].quantity >= 1) {
+                    let updatedQuantity = cart[index].quantity - 1;
+                    cart[index].quantity = updatedQuantity;
+                    cart[index].subtotal = cart[index].price * updatedQuantity;
+                    console.log('remove' + updatedQuantity);
+                }
+            }
+        }
+    }
+    calculateSubtotals();
     // 2. Add found product to the cartList array
 }
 
 // Exercise 10
-function printCart() {
     // Fill the shopping cart modal manipulating the shopping cart dom
+function printCart() {
+
+     /* let listnames;
+    let listprice;
+    
+   for(let item in cart) {
+        listnames = cart[item].name;
+        listprice = cart[item].price;
+        
+        let node = document.createElement("li");
+        let div = document.getElementById('list').appendChild(node);
+        div.append(listnames, listprice);
+    } */
+
+   /*  for(let item in cart) {
+        listnames = cart[item].name;
+        listprice = cart[item].price;
+
+        let node = document.createElement("li");
+        let node2 = document.createElement("li");
+        let textnode = document.createTextNode(listnames);
+        let textnode2 = document.createTextNode(listprice);
+        
+        node.appendChild(textnode);
+        document.getElementById("list").appendChild(node);
+        document.getElementById("list").appendChild(node2);
+    } */
+
+    //var names = ['vitosh','academy','dot','com'];
+	    let listnames = cart[item].name;
+		var ul = document.createElement('ul');
+		document.getElementById('list').appendChild(ul);
+
+		cart.forEach(function(name){
+			var li = document.createElement('li');
+			ul.appendChild(li);
+			li.innerHTML += name;
+		});
 }
