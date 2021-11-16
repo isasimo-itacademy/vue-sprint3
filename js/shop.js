@@ -94,19 +94,23 @@ function buy(id) {
 // Exercise 2
 function cleanCart() {
     cartList = [];
+    cart = [];
+    subtotal.grocery.value = 0;
+    subtotal.beauty.value = 0;
+    subtotal.clothes.value = 0;
+    total = 0;
 }
 
 // Exercise 3
 function calculateSubtotals() {
     // 1. Create a for loop on the "cartList" array 
     // 2. Implement inside the loop an if...else or switch...case to add the quantities of each type of product, obtaining the subtotals: subtotalGrocery, subtotalBeauty and subtotalClothes
-    
-    /* 
-    // Before Refactor
     subtotal.grocery.value = 0;
     subtotal.beauty.value = 0;
     subtotal.clothes.value = 0;
 
+    /* 
+    // Before Refactor
     for (let index = 0; index < cartList.length; index++) {
         switch (cartList[index].type) {
             case 'grocery':
@@ -125,33 +129,30 @@ function calculateSubtotals() {
                 break;
         }
     }
-    console.log('subtotalGrocery: ' + subtotal.grocery.value);
-    console.log('subtotalBeauty: ' + subtotal.beauty.value);
-    console.log('subtotalClothes: ' + subtotal.clothes.value); 
     */
 
     // After Refactor
-    for (let index = 0; index < cart.length; index++) {
+    for(let index in cart) {
         switch (cart[index].type) {
             case 'grocery':
-                subtotal.grocery.value += cart[index].price;
+                subtotal.grocery.value += cart[index].subtotal;
                 break;
             
             case 'beauty':
-                subtotal.beauty.value += cart[index].price;
+                subtotal.beauty.value += cart[index].subtotal;
                 break;
 
             case 'clothes':
-                subtotal.clothes.value += cart[index].price;
+                subtotal.clothes.value += cart[index].subtotal;
                 break;
 
             default:
                 break;
         }
     }
-    console.log('subtotalGrocery: ' + subtotal.grocery.value);
+    /* console.log('subtotalGrocery: ' + subtotal.grocery.value);
     console.log('subtotalBeauty: ' + subtotal.beauty.value);
-    console.log('subtotalClothes: ' + subtotal.clothes.value);
+    console.log('subtotalClothes: ' + subtotal.clothes.value); */
     calculateTotal();
 }
 
@@ -200,6 +201,8 @@ function applyPromotionsCart() {
         } else if ((cart[prop].name === 'Instant cupcake mixture') && (cart[prop].quantity >= 10)) {
             let ofertaMixSub = (cart[prop].subtotal / 3) * 2;
             cart[prop].subtotalWithDiscount = ofertaMixSub;
+        } else {
+            cart[prop].subtotalWithDiscount = cart[prop].subtotal;
         }
     }
     console.log(cart);
