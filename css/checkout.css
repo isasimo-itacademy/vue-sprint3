@@ -3,6 +3,15 @@
 body {
     font-family: Poppins;
 }
-#errorPassword, #errorName, #errorPhone {
-    display: none;
+
+.invalid-tooltip {
+    position: relative !important;
+}
+
+.marginright {
+    margin-right: 40px;
+}
+
+.marginleft {
+    margin-left: 40px;
 }
