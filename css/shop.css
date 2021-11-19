@@ -24,3 +24,8 @@ body{
     right: 0;
     margin-right: 1rem;
 }
+
+.checkoutlist {
+    background-color: yellow;
+    margin-bottom: 10px;
+}

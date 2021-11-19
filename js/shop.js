@@ -251,42 +251,18 @@ function removeFromCart(id) {
 
 // Exercise 10
     // Fill the shopping cart modal manipulating the shopping cart dom
-function printCart() {
-
-     /* let listnames;
-    let listprice;
-    
+function printCart() { 
    for(let item in cart) {
-        listnames = cart[item].name;
-        listprice = cart[item].price;
+        let thename = cart[item].name;
+        let theprice = cart[item].price;
+        let thequantity = cart[item].quantity;
+        let thesubtotal = cart[item].subtotal;
         
         let node = document.createElement("li");
-        let div = document.getElementById('list').appendChild(node);
-        div.append(listnames, listprice);
-    } */
+        let lilist = document.getElementById('list').appendChild(node);
+        lilist.append(thename, theprice);
+        lilist.append(thequantity, thesubtotal);
 
-   /*  for(let item in cart) {
-        listnames = cart[item].name;
-        listprice = cart[item].price;
-
-        let node = document.createElement("li");
-        let node2 = document.createElement("li");
-        let textnode = document.createTextNode(listnames);
-        let textnode2 = document.createTextNode(listprice);
-        
-        node.appendChild(textnode);
-        document.getElementById("list").appendChild(node);
-        document.getElementById("list").appendChild(node2);
-    } */
-
-    //var names = ['vitosh','academy','dot','com'];
-	    let listnames = cart[item].name;
-		var ul = document.createElement('ul');
-		document.getElementById('list').appendChild(ul);
-
-		cart.forEach(function(name){
-			var li = document.createElement('li');
-			ul.appendChild(li);
-			li.innerHTML += name;
-		});
+        node.classList.add("checkoutlist");
+    }
 }
