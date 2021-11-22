@@ -196,16 +196,16 @@ function applyPromotionsCart() {
         if ((cart[prop].name === 'cooking oil') && (cart[prop].quantity >= 3)) {
             console.log('OFERTA oli');
             let ofertaOli = 10;
-            cart[prop].price = ofertaOli;
+            //cart[prop].price = ofertaOli;
             cart[prop].subtotalWithDiscount = ofertaOli * cart[prop].quantity;
         } else if ((cart[prop].name === 'Instant cupcake mixture') && (cart[prop].quantity >= 10)) {
             let ofertaMixSub = (cart[prop].subtotal / 3) * 2;
-            cart[prop].subtotalWithDiscount = ofertaMixSub;
+            cart[prop].subtotalWithDiscount = ofertaMixSub.toFixed(2);
         } else {
             cart[prop].subtotalWithDiscount = cart[prop].subtotal;
         }
     }
-    //console.log(cart);
+    console.log(cart);
 }
 
 // Exercise 7
@@ -252,17 +252,97 @@ function removeFromCart(id) {
 // Exercise 10
     // Fill the shopping cart modal manipulating the shopping cart dom
 function printCart() { 
-   for(let item in cart) {
-        let thename = cart[item].name;
-        let theprice = cart[item].price;
-        let thequantity = cart[item].quantity;
-        let thesubtotal = cart[item].subtotal;
-        
-        let node = document.createElement("li");
-        let lilist = document.getElementById('list').appendChild(node);
-        lilist.append(thename, theprice);
-        lilist.append(thequantity, thesubtotal);
 
-        node.classList.add("checkoutlist");
-    }
+    if(cart.length !== 0) {
+
+        for(let item in cart) {
+            // create product item structure
+            let node = document.createElement("div");
+            node.classList.add("cart-item");
+            let cartitem = document.getElementById('list').appendChild(node);
+
+            let pictnode = document.createElement("div");
+            pictnode.classList.add("picture-item");
+            cartitem.append(pictnode);
+            
+            let contentitem = document.createElement("div");
+            contentitem.classList.add("content-item");
+            cartitem.append(contentitem);
+
+            // show name
+            let cartname = document.createElement("div");
+            cartname.classList.add("cart-name");
+            
+            contentitem.append(cartname); 
+            cartname.append(cart[item].name);
+
+            // extra info div
+            let infonode = document.createElement("div");
+            infonode.classList.add("cart-info");
+            contentitem.append(infonode);
+
+            let smallinfonode = document.createElement("div");
+            smallinfonode.classList.add("cart-smallinfo");
+            infonode.append(smallinfonode);
+
+            // show price
+            let cartprice = document.createElement("div");
+            cartprice.classList.add("cart-price");
+            
+            smallinfonode.append(cartprice);
+            cartprice.append("$" + cart[item].price);
+
+            // show quantity
+            let cartquantity = document.createElement("div");
+            cartquantity.classList.add("cart-quantity");
+            
+            smallinfonode.append(cartquantity);
+            cartquantity.append("x" + cart[item].quantity);
+
+            // create subtotal structure
+            let subtotalnode = document.createElement("div");
+            subtotalnode.classList.add("subtotal");
+            infonode.append(subtotalnode);
+
+            // create subtotal
+            let cartsubtotal = document.createElement("div");
+            // show subtotal
+            subtotalnode.append(cartsubtotal);
+            cartsubtotal.append("$" + cart[item].subtotal);
+
+            // show subtotal with discount
+            if (cart[item].subtotal !== cart[item].subtotalWithDiscount) {
+                // add striked class to subtotal
+                cartsubtotal.classList.add("striked");
+                
+                let cartdiscount = document.createElement("div");
+                cartdiscount.classList.add("cart-discount");
+                
+                subtotalnode.append(cartdiscount);
+                cartdiscount.append("$" + cart[item].subtotalWithDiscount);
+            } else {        
+                // add subtotal without discount
+                cartsubtotal.classList.add("cart-subtotal");
+            }
+        }
+
+        // show total
+        let nodetotal = document.createElement("div");
+        nodetotal.classList.add("cart-item");
+        let cartitem = document.getElementById('list').appendChild(nodetotal);
+                    
+        let totaltittle = document.createElement("div");
+        totaltittle.classList.add("total-tittle");
+        cartitem.append(totaltittle); 
+        totaltittle.append("TOTAL");
+                    
+        let totalprice = document.createElement("div");
+        totalprice.classList.add("total-price");
+        cartitem.append(totalprice); 
+        totalprice.append(total);
+
+        // remove empty placeholder text
+        var selecttext = document.getElementById("selectsomething");
+        selecttext.remove();
+    } 
 }
