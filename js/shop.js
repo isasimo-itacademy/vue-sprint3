@@ -231,22 +231,24 @@ function addToCart(id) {
 
 // Exercise 9
 function removeFromCart(id) {
-    // 1. Loop for to the array products to get the item to add to cart
+    // 1. Loop for to the array products to get the item to add to cart << WRONG DESCRIPTION
     for(let item in products) {
-        if (products[item].id === id) {
-            if (cart.some(e => e.name === products[item].name)) {
-                let index = cart.findIndex(quin => quin.name === products[item].name);
-                if(cart[index].quantity >= 1) {
-                    let updatedQuantity = cart[index].quantity - 1;
-                    cart[index].quantity = updatedQuantity;
-                    cart[index].subtotal = cart[index].price * updatedQuantity;
-                    console.log('remove' + updatedQuantity);
+        if ((products[item].id === id) && (cart.some(e => e.name === products[item].name))) {
+            let index = cart.findIndex(quin => quin.name === products[item].name);
+            if (cart[index].quantity >= 1) {
+                let updatedQuantity = cart[index].quantity - 1;
+                cart[index].quantity = updatedQuantity;
+                cart[index].subtotal = cart[index].price * updatedQuantity;  
+
+                // Remove when quantity is 0 from that product in cart
+                if (cart[index].quantity == 0) {
+                    cart.splice(index, 1);
                 }
             }
         }
     }
     calculateSubtotals();
-    // 2. Add found product to the cartList array
+    // 2. Add found product to the cartList array << WRONG DESCRIPTION
 }
 
 // Exercise 10
