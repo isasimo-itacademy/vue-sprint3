@@ -56,6 +56,7 @@ body{
 
 .cart-smallinfo {
     display: flex;
+    align-items: center;
 }
 
 .subtotal {
@@ -70,6 +71,10 @@ body{
 .cart-discount {
     color: red;
     margin-left: 16px;
+}
+
+.cart-quantity {
+    margin: 0 10px;
 }
 
 .cart-price {
@@ -89,4 +94,10 @@ body{
 .total-price {
     display: flex;
     justify-content: flex-end;
+}
+
+.small-button-card {
+    border-radius: 3px;
+    background-color: white;
+    border: 1px solid #dfdfdf;
 }

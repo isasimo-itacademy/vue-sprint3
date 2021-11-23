@@ -254,14 +254,22 @@ function removeFromCart(id) {
 // Exercise 10
     // Fill the shopping cart modal manipulating the shopping cart dom
 function printCart() { 
+    if (cart.length !== 0) {
 
-    if(cart.length !== 0) {
+        let thelist = document.getElementById('list');
 
-        for(let item in cart) {
-            // create product item structure
+        let thenodecontent = document.createElement("div");
+        thenodecontent.setAttribute("id", "content");
+        let thecontent = thelist.appendChild(thenodecontent);
+
+        for (let item in cart) {
+            let productname = cart[item].name;
+
             let node = document.createElement("div");
             node.classList.add("cart-item");
-            let cartitem = document.getElementById('list').appendChild(node);
+            
+
+            let cartitem = thecontent.appendChild(node);
 
             let pictnode = document.createElement("div");
             pictnode.classList.add("picture-item");
@@ -276,7 +284,7 @@ function printCart() {
             cartname.classList.add("cart-name");
             
             contentitem.append(cartname); 
-            cartname.append(cart[item].name);
+            cartname.append(productname);
 
             // extra info div
             let infonode = document.createElement("div");
@@ -294,12 +302,42 @@ function printCart() {
             smallinfonode.append(cartprice);
             cartprice.append("$" + cart[item].price);
 
+            // add less
+            let addless = document.createElement("button");
+            addless.classList.add("small-button-card");
+            smallinfonode.append(addless);
+            addless.append("-");
+            addless.onclick = function() { 
+                for(let item in products) {
+                    if (products[item].name === productname) {
+                        removeFromCart(products[item].id);
+                    }
+                }
+                removePrintCart();
+                printCart();
+            };
+
             // show quantity
             let cartquantity = document.createElement("div");
             cartquantity.classList.add("cart-quantity");
             
             smallinfonode.append(cartquantity);
             cartquantity.append("x" + cart[item].quantity);
+
+            // add more
+            let addmore = document.createElement("button");
+            addmore.classList.add("small-button-card");
+            smallinfonode.append(addmore);
+            addmore.append("+");
+            addmore.onclick = function() { 
+                for(let item in products) {
+                    if (products[item].name === productname) {
+                        addToCart(products[item].id);
+                    }
+                }
+                removePrintCart();
+                printCart();
+            };
 
             // create subtotal structure
             let subtotalnode = document.createElement("div");
@@ -325,13 +363,13 @@ function printCart() {
             } else {        
                 // add subtotal without discount
                 cartsubtotal.classList.add("cart-subtotal");
-            }
+            }        
         }
 
         // show total
-        let nodetotal = document.createElement("div");
+        var nodetotal = document.createElement("div");
         nodetotal.classList.add("cart-item");
-        let cartitem = document.getElementById('list').appendChild(nodetotal);
+        let cartitem = thecontent.appendChild(nodetotal);
                     
         let totaltittle = document.createElement("div");
         totaltittle.classList.add("total-tittle");
@@ -344,7 +382,16 @@ function printCart() {
         totalprice.append(total);
 
         // remove empty placeholder text
-        var selecttext = document.getElementById("selectsomething");
-        selecttext.remove();
-    } 
+        let selecttext = document.getElementById("selectsomething");
+        if (selecttext !== null) {
+            selecttext.remove();
+        }
+    }
+}
+
+function removePrintCart() {
+    let thecontent = document.getElementById('content');
+    if (thecontent !== null) {
+        thecontent.remove();
+    }
 }
