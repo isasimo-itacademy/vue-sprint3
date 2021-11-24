@@ -194,13 +194,13 @@ function applyPromotionsCart() {
     // Apply promotions to each item in the array "cart"
     for (let prop in cart) {
         if ((cart[prop].name === 'cooking oil') && (cart[prop].quantity >= 3)) {
-            //console.log('OFERTA oli');
+            console.log('OFERTA oli');
             let ofertaOli = 10;
-            cart[prop].price = ofertaOli;
+            //cart[prop].price = ofertaOli;
             cart[prop].subtotalWithDiscount = ofertaOli * cart[prop].quantity;
         } else if ((cart[prop].name === 'Instant cupcake mixture') && (cart[prop].quantity >= 10)) {
             let ofertaMixSub = (cart[prop].subtotal / 3) * 2;
-            cart[prop].subtotalWithDiscount = ofertaMixSub;
+            cart[prop].subtotalWithDiscount = ofertaMixSub.toFixed(2);
         } else {
             cart[prop].subtotalWithDiscount = cart[prop].subtotal;
         }
@@ -231,11 +231,167 @@ function addToCart(id) {
 
 // Exercise 9
 function removeFromCart(id) {
-    // 1. Loop for to the array products to get the item to add to cart
-    // 2. Add found product to the cartList array
+    // 1. Loop for to the array products to get the item to add to cart << WRONG DESCRIPTION
+    for(let item in products) {
+        if ((products[item].id === id) && (cart.some(e => e.name === products[item].name))) {
+            let index = cart.findIndex(quin => quin.name === products[item].name);
+            if (cart[index].quantity >= 1) {
+                let updatedQuantity = cart[index].quantity - 1;
+                cart[index].quantity = updatedQuantity;
+                cart[index].subtotal = cart[index].price * updatedQuantity;  
+
+                // Remove when quantity is 0 from that product in cart
+                if (cart[index].quantity == 0) {
+                    cart.splice(index, 1);
+                }
+            }
+        }
+    }
+    calculateSubtotals();
+    // 2. Add found product to the cartList array << WRONG DESCRIPTION
 }
 
 // Exercise 10
-function printCart() {
     // Fill the shopping cart modal manipulating the shopping cart dom
+function printCart() { 
+    if (cart.length !== 0) {
+
+        let thelist = document.getElementById('list');
+
+        let thenodecontent = document.createElement("div");
+        thenodecontent.setAttribute("id", "content");
+        let thecontent = thelist.appendChild(thenodecontent);
+
+        for (let item in cart) {
+            let productname = cart[item].name;
+
+            let node = document.createElement("div");
+            node.classList.add("cart-item");
+            
+
+            let cartitem = thecontent.appendChild(node);
+
+            let pictnode = document.createElement("div");
+            pictnode.classList.add("picture-item");
+            cartitem.append(pictnode);
+            
+            let contentitem = document.createElement("div");
+            contentitem.classList.add("content-item");
+            cartitem.append(contentitem);
+
+            // show name
+            let cartname = document.createElement("div");
+            cartname.classList.add("cart-name");
+            
+            contentitem.append(cartname); 
+            cartname.append(productname);
+
+            // extra info div
+            let infonode = document.createElement("div");
+            infonode.classList.add("cart-info");
+            contentitem.append(infonode);
+
+            let smallinfonode = document.createElement("div");
+            smallinfonode.classList.add("cart-smallinfo");
+            infonode.append(smallinfonode);
+
+            // show price
+            let cartprice = document.createElement("div");
+            cartprice.classList.add("cart-price");
+            
+            smallinfonode.append(cartprice);
+            cartprice.append("$" + cart[item].price);
+
+            // add less
+            let addless = document.createElement("button");
+            addless.classList.add("small-button-card");
+            smallinfonode.append(addless);
+            addless.append("-");
+            addless.onclick = function() { 
+                for(let item in products) {
+                    if (products[item].name === productname) {
+                        removeFromCart(products[item].id);
+                    }
+                }
+                removePrintCart();
+                printCart();
+            };
+
+            // show quantity
+            let cartquantity = document.createElement("div");
+            cartquantity.classList.add("cart-quantity");
+            
+            smallinfonode.append(cartquantity);
+            cartquantity.append("x" + cart[item].quantity);
+
+            // add more
+            let addmore = document.createElement("button");
+            addmore.classList.add("small-button-card");
+            smallinfonode.append(addmore);
+            addmore.append("+");
+            addmore.onclick = function() { 
+                for(let item in products) {
+                    if (products[item].name === productname) {
+                        addToCart(products[item].id);
+                    }
+                }
+                removePrintCart();
+                printCart();
+            };
+
+            // create subtotal structure
+            let subtotalnode = document.createElement("div");
+            subtotalnode.classList.add("subtotal");
+            infonode.append(subtotalnode);
+
+            // create subtotal
+            let cartsubtotal = document.createElement("div");
+            // show subtotal
+            subtotalnode.append(cartsubtotal);
+            cartsubtotal.append("$" + cart[item].subtotal);
+
+            // show subtotal with discount
+            if (cart[item].subtotal !== cart[item].subtotalWithDiscount) {
+                // add striked class to subtotal
+                cartsubtotal.classList.add("striked");
+                
+                let cartdiscount = document.createElement("div");
+                cartdiscount.classList.add("cart-discount");
+                
+                subtotalnode.append(cartdiscount);
+                cartdiscount.append("$" + cart[item].subtotalWithDiscount);
+            } else {        
+                // add subtotal without discount
+                cartsubtotal.classList.add("cart-subtotal");
+            }        
+        }
+
+        // show total
+        var nodetotal = document.createElement("div");
+        nodetotal.classList.add("cart-item");
+        let cartitem = thecontent.appendChild(nodetotal);
+                    
+        let totaltittle = document.createElement("div");
+        totaltittle.classList.add("total-tittle");
+        cartitem.append(totaltittle); 
+        totaltittle.append("TOTAL");
+                    
+        let totalprice = document.createElement("div");
+        totalprice.classList.add("total-price");
+        cartitem.append(totalprice); 
+        totalprice.append(total);
+
+        // remove empty placeholder text
+        let selecttext = document.getElementById("selectsomething");
+        if (selecttext !== null) {
+            selecttext.remove();
+        }
+    }
+}
+
+function removePrintCart() {
+    let thecontent = document.getElementById('content');
+    if (thecontent !== null) {
+        thecontent.remove();
+    }
 }
