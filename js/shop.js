@@ -4,55 +4,64 @@ var products = [
         id: 1,
         name: 'cooking oil',
         price: 10.5,
-        type: 'grocery'
+        type: 'grocery',
+        img: 'images/oli.png'
     },
     {
         id: 2,
         name: 'Pasta',
         price: 6.25,
-        type: 'grocery'
+        type: 'grocery',
+        img: 'images/pasta.png'
     },
     {
         id: 3,
         name: 'Instant cupcake mixture',
         price: 5,
-        type: 'grocery'
+        type: 'grocery',
+        img: 'images/muffin.png'
     },
     {
         id: 4,
         name: 'All-in-one',
         price: 260,
-        type: 'beauty'
+        type: 'beauty',
+        img: 'images/makeup1.png'
     },
     {
         id: 5,
         name: 'Zero Make-up Kit',
         price: 20.5,
-        type: 'beauty'
+        type: 'beauty',
+        img: 'images/makeup2.png'
     },
     {
         id: 6,
         name: 'Lip Tints',
         price: 12.75,
-        type: 'beauty'
+        type: 'beauty',
+        img: 'images/makeup3.png'
     },
     {
         id: 7,
         name: 'Lawn Dress',
         price: 15,
-        type: 'clothes'
+        type: 'clothes',
+        img: 'images/oli.png'
     },
     {
         id: 8,
         name: 'Lawn-Chiffon Combo',
         price: 19.99,
-        type: 'clothes'
+        type: 'clothes',
+        img: 'images/pasta.png'
     },
     {
         id: 9,
         name: 'Toddler Frock',
         price: 9.99,
-        type: 'clothes'
+        type: 'clothes',
+        img: 'images/muffin.png'
     }
 ]
 // Array with products (objects) added directly with push(). Products in this array are repeated.
@@ -150,9 +159,6 @@ function calculateSubtotals() {
                 break;
         }
     }
-    /* console.log('subtotalGrocery: ' + subtotal.grocery.value);
-    console.log('subtotalBeauty: ' + subtotal.beauty.value);
-    console.log('subtotalClothes: ' + subtotal.clothes.value); */
     calculateTotal();
 }
 
@@ -163,7 +169,7 @@ function calculateTotal() {
 
     for (let key in subtotal) {
         //console.log(subtotal[key].value);
-        total += subtotal[key].value; 
+        total += subtotal[key].value;
     }
     //console.log('TOTAL: ' + total);
     //generateCart();
@@ -185,7 +191,6 @@ function generateCart() {
             cart.push({name: cartList[prop].name, price: cartList[prop].price, type: cartList[prop].type, quantity: 1, subtotal: cartList[prop].price, subtotalWithDiscount: 0});
         }
     }
-    //console.log(cart);
     applyPromotionsCart();
 }
 
@@ -196,7 +201,6 @@ function applyPromotionsCart() {
         if ((cart[prop].name === 'cooking oil') && (cart[prop].quantity >= 3)) {
             console.log('OFERTA oli');
             let ofertaOli = 10;
-            //cart[prop].price = ofertaOli;
             cart[prop].subtotalWithDiscount = ofertaOli * cart[prop].quantity;
         } else if ((cart[prop].name === 'Instant cupcake mixture') && (cart[prop].quantity >= 10)) {
             let ofertaMixSub = (cart[prop].subtotal / 3) * 2;
@@ -225,7 +229,6 @@ function addToCart(id) {
             }
         }
     }
-    //console.log(cart);
     calculateSubtotals();
 }
 
@@ -268,13 +271,23 @@ function printCart() {
             let node = document.createElement("div");
             node.classList.add("cart-item");
             
-
             let cartitem = thecontent.appendChild(node);
 
-            let pictnode = document.createElement("div");
+            // load product image
+            let pictnode = document.createElement("img");
             pictnode.classList.add("picture-item");
+            
+            for(let quin in products) {
+                if (products[quin].name === productname) {
+                    var imgurl = products[quin].img;
+                    
+                }
+            }
+            console.log(imgurl);
+            pictnode.setAttribute('src', imgurl);
             cartitem.append(pictnode);
             
+            // content structure
             let contentitem = document.createElement("div");
             contentitem.classList.add("content-item");
             cartitem.append(contentitem);
@@ -298,7 +311,6 @@ function printCart() {
             // show price
             let cartprice = document.createElement("div");
             cartprice.classList.add("cart-price");
-            
             smallinfonode.append(cartprice);
             cartprice.append("$" + cart[item].price);
 
@@ -379,7 +391,7 @@ function printCart() {
         let totalprice = document.createElement("div");
         totalprice.classList.add("total-price");
         cartitem.append(totalprice); 
-        totalprice.append(total);
+        totalprice.append(total.toFixed(2));
 
         // remove empty placeholder text
         let selecttext = document.getElementById("selectsomething");

@@ -49,14 +49,19 @@ body{
     justify-content: center;
 }
 
-/* checkout cart */
+/* modal checkout cart */
+
+.modal{
+    color: #061023;
+}
+
 .cart-item {
     display: grid;
     grid-template-columns: 80px auto;
     align-items: center;
     grid-gap: 16px;
-    background-color: white;
-    border: 1px solid #dfdfdf;
+    background-color: #f3f1f1;
+    border: 1px solid #e1dbdb;
     margin-bottom: 10px;
     border-radius: 8px;
     padding: 16px;
@@ -64,7 +69,8 @@ body{
 
 .picture-item{
     height: 80px;
-    background-color: #e1e1e1;
+    background-color: #ffffff;
+    border: 1px solid #e1dbdb;
     border-radius: 8px;
 }
 
