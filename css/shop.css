@@ -4,7 +4,7 @@ body{
 }
 /* navbar */
 .navbar{
-    background-color: rgb(43, 43, 43) !important;
+    background-color:#0E284E !important;
 }
 .nav-link{
     color: rgb(255, 255, 255);
@@ -25,13 +25,43 @@ body{
     margin-right: 1rem;
 }
 
+/* product list */
+.btn-primary {
+    background: linear-gradient(90deg, #9372EA 0%, #CD4AC5 52.08%, #D88350 100%);
+     border: none;
+}
+
+.product-list {
+    background-color: #061023;
+    color: #F2F2F2;
+}
+
+.card {
+    background-color: #061023;
+    border-radius: 24px;
+}
+
+.card:hover {
+    background-color: #071A36;
+}
+
+#grocery, #beauty, #clothes {
+    justify-content: center;
+}
+
+/* modal checkout cart */
+
+.modal{
+    color: #061023;
+}
+
 .cart-item {
     display: grid;
     grid-template-columns: 80px auto;
     align-items: center;
     grid-gap: 16px;
-    background-color: white;
-    border: 1px solid #dfdfdf;
+    background-color: #f3f1f1;
+    border: 1px solid #e1dbdb;
     margin-bottom: 10px;
     border-radius: 8px;
     padding: 16px;
@@ -39,7 +69,8 @@ body{
 
 .picture-item{
     height: 80px;
-    background-color: #e1e1e1;
+    background-color: #ffffff;
+    border: 1px solid #e1dbdb;
     border-radius: 8px;
 }
 
